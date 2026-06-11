@@ -19,7 +19,6 @@ import ssl
 
 model_path = 'hand_landmarker.task'
 if not os.path.exists(model_path):
-    print("Загрузка модели распознавания рук...")
     url = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task"
     
     # ignore SSL verification errors on macOS
@@ -37,8 +36,6 @@ screen_width, screen_height = pyautogui.size()
 is_dragging = False
 frame_count = 0
 cap = cv2.VideoCapture(0)
-
-print("Программа запускается. Нажмите 'q' для выхода.")
 
 with HandLandmarker.create_from_options(options) as landmarker:
     while cap.isOpened():
@@ -84,13 +81,13 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 if not is_dragging:
                     pyautogui.mouseDown()
                     is_dragging = True
-                    print("Зажали")
+                    print("mouse pressed")
                 pyautogui.moveTo(x_mouse, y_mouse)
             else:
                 if is_dragging:
                     pyautogui.mouseUp()
                     is_dragging = False
-                    print("Отпустили")
+                    print("mouse released")
 
         cv2.imshow('Hand Control', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
